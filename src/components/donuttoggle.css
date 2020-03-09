@@ -1,0 +1,24 @@
+.donutchart-track{
+  fill: transparent;
+  stroke: #DAE2E5;
+  stroke-width: 26;
+}
+.donutchart-indicator {
+  fill: transparent;
+  stroke: black;
+  stroke-width: 26;
+}
+
+.donutchart {
+  margin: 0 auto;
+  border-radius: 50%;
+  display: block;
+}
+  /* svg{
+    top: 2%;
+    left: 97%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  } */
