@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DoenetPage from './Components/DoenetPage'
 import './App.css';
 
 
@@ -13,9 +14,7 @@ class App extends Component {
 
   render() {
     return (
-      <>
-      <p>test</p>
-      </>
+      <DoenetPage />
     );
   }  
 }

@@ -1,0 +1,73 @@
+body{
+  background-color: rgb(246, 248, 255);
+  padding: 0;
+  margin: 0;
+  font-family: 'Droid Serif','Georgia', 'Times New Roman', 'Times', 'serif';
+}
+
+.button:hover {
+  color: white;
+}
+
+
+
+/* 1024-Infinity */
+/* COMPUTER */
+
+#PageContainer{
+  display: grid;
+  grid-template-columns: 200px auto 400px;
+  grid-template-rows: 50px auto;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+ 
+}
+#pageNavPhone{
+  display: none;
+}
+
+#LeftNavMenu{
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  padding: 5px;
+  border: 1px solid;
+}
+
+#LeftNav{
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  overflow: scroll; 
+  border: 1px solid;
+
+  
+}
+
+#ContentPanel{
+  grid-column: 2 / 3;
+  grid-row: 2/3;
+  padding: 5px;
+  border: 1px solid;
+
+}
+/* #textEdit{
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  
+} */
+#ToggleOverlayMenu{
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  padding: 5px;
+  border: 1px solid;
+
+  
+}
+#DashboardPanel{
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  border: 1px solid;
+
+ 
+}
+ 
