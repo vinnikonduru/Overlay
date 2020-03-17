@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DoenetPage from './Components/DoenetPage'
+import ToolLayout from './Components/ToolLayout';
 import './App.css';
 
 
@@ -10,11 +10,13 @@ class App extends Component {
     
   }
 
-      
 
+  
   render() {
     return (
-      <DoenetPage />
+      <ToolLayout>
+      </ToolLayout>
+
     );
   }  
 }

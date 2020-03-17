@@ -16,8 +16,8 @@ body{
 
 #PageContainer{
   display: grid;
-  grid-template-columns: 200px auto 400px;
-  grid-template-rows: 50px auto;
+  grid-template-columns: 200px auto 500px ;
+  grid-template-rows: 100px auto;
   width: 100vw;
   height: 100vh;
   padding: 0;
@@ -27,47 +27,150 @@ body{
   display: none;
 }
 
-#LeftNavMenu{
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-  padding: 5px;
-  border: 1px solid;
-}
-
 #LeftNav{
   grid-column: 1 / 2;
-  grid-row: 2 / 3;
-  overflow: scroll; 
-  border: 1px solid;
-
-  
+  grid-row: 1 / 3;
+  padding: 5px;
+  border:1px solid black;
 }
+.close_nav_icon{
+  min-width:25px;
+  min-height:25px;
+}
+
+/* #LeftNav{
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+} */
 
 #ContentPanel{
   grid-column: 2 / 3;
-  grid-row: 2/3;
+  grid-row: 1/3;
   padding: 5px;
-  border: 1px solid;
+  overflow: scroll;
 
 }
-/* #textEdit{
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-  
-} */
+
 #ToggleOverlayMenu{
   grid-column: 3 / 4;
   grid-row: 1 / 2;
   padding: 5px;
-  border: 1px solid;
-
-  
+  border:1px solid orange; 
 }
 #DashboardPanel{
   grid-column: 3 / 4;
   grid-row: 2 / 3;
-  border: 1px solid;
+  border: 1px solid orange; 
 
- 
 }
- 
+.margin-resize{
+  margin: 10px;
+  padding:10px;
+}
+
+
+/* 768 - 1024 */
+/* TABLET */
+@media only screen and (max-width:1024px){
+
+  #PageContainer{
+    display: grid;
+    grid-template-columns: 100px auto 300px;
+    grid-template-rows: 100px auto ;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+  
+  }
+  #pageNavPhone{
+    display: none;
+  }
+
+  #LeftNavMenu{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    padding: 5px;
+    border: 1px solid orange;
+  }
+
+  #LeftNav{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    overflow: scroll; 
+    border: 1px solid orange;
+  }
+
+  #ContentPanel{
+    grid-column: 2 / 3;
+    grid-row: 1/3;
+    padding: 5px;
+    /* overflow: scroll; */
+
+  }
+
+  #ToggleOverlayMenu{
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    padding: 5px;
+    border: 1px solid orange; 
+  }
+  #DashboardPanel{
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    border: 1px solid orange; 
+
+  }
+
+}
+
+/* 0 - 768 */
+/* PHONE */
+@media only screen and (max-width:768px){
+  #PageContainer{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto 200px 50px ;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin:0;
+  }
+  #pageNavPhone{
+    display: block;
+  }
+
+  #ContentPanel{
+    grid-column: 1/4;
+    grid-row: 1/2;
+    padding: 5px;
+    overflow: scroll;
+    border: 1px solid orange;
+  }
+   #DashboardPanel{
+    grid-column: 1/4;
+    grid-row: 2/3;
+    padding: 5px;
+    overflow: scroll;
+    border: 1px solid orange; 
+
+  }
+  
+
+ #ToggleOverlayMenu{
+    grid-column: 1 / 4;
+    grid-row: 3 / 3;
+    border: 1px solid orange; 
+
+  } 
+
+  .pageNav{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+    position: fixed;
+    margin: 0 auto;
+    text-align: center;    
+  }
+
+}
