@@ -38,7 +38,7 @@ class ToolLayout extends Component {
   componentWillMount(){
     window.removeEventListener("resize", this.windowResizerHandler);
   }
-  handleClick(index){
+ handlePhoneNavPanel(index){
     console.log("index", index)
     this.setState(state => ({
       selectedIndex: index
