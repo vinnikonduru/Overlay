@@ -13,7 +13,7 @@ class ToolLayout extends Component {
 
       deviceGivenWidth : this.widthToDevice(),
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handlePhoneNavPanel  = this.handlePhoneNavPanel .bind(this);
     this.windowResizerHandler = this.windowResizerHandler.bind(this);
     this.getSelectedTab = this.getSelectedTab.bind(this);
   }
@@ -59,13 +59,8 @@ class ToolLayout extends Component {
   render() {
     let left_nav_panel_style = {};
     let page_content_panel_style = {};
-
     let notes_panel_style = {};
-
-
     
-    
-
     return (
      <div id="layoutContainer" className="layout-container">
        {this.state.deviceGivenWidth !== 'phone' ? (
@@ -87,16 +82,14 @@ class ToolLayout extends Component {
              {this.getSelectedTab()}
            </div>
            <div style={{display:'flex', bottom:'10px', textAlign:'center', width:'100%',position:'fixed',justifyContent:'center'}}>
-             <button className="selected" onClick={() => this.handleClick(0)}>Left Nav</button>
-             <button  className="selected" onClick={() => this.handleClick(1)}>Content Panel</button>
-             <button className="selected" onClick={() => this.handleClick(2)}>Notes panel</button>
+             <button className="selected" onClick={() => this.handlePhoneNavPanel (0)}>Left Nav</button>
+             <button  className="selected" onClick={() => this.handlePhoneNavPanel (1)}>Content Panel</button>
+             <button className="selected" onClick={() => this.handlePhoneNavPanel (2)}>Notes panel</button>
 
            </div>
          </React.Fragment>
        )}
-     </div>
-     
-      
+     </div> 
     );
   }
 }
