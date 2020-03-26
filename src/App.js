@@ -3,7 +3,8 @@ import './App.css';
 import ToolLayoutTest from './Components/ToolLayoutTest'
 
 // import ToolTest from './Components/ToolTest';
-import ToolTest25 from './Components/ToolTest25';
+// import ToolTest25 from './Components/ToolTest25';
+// import ToolPanelsTest from './Components/ToolPanelsTest';
 
 
 
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <>
     <ToolLayoutTest/>
-    {/* <ToolTest25/> */}
+    {/* <ToolPanelsTest/> */}
       </>
     );
   }  

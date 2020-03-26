@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
 const alphabet = "a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z ";
 const Container = styled.div` 
@@ -11,9 +11,9 @@ const Container = styled.div`
 `;
 
 const Resizer = styled.div`
-    width:10px;
+    width:6px;
     background-color:#c6ccc8;
-    opacity: 0.1;
+    opacity: 0.2;
     position: relative;
     cursor: col-resize;
     flex-shrink: 0;
@@ -26,8 +26,8 @@ const Resizer = styled.div`
 function Example() {
     var w = window.innerWidth;
     const leftW = 200;
-    const rightW = 400;
-    const resizerW = 10;
+    const rightW = 300;
+    const resizerW = 6;
     const middleW = w - leftW - rightW - resizerW - resizerW;
     const [leftWidth, setLeftWidth] = useState(leftW);
     const [middleWidth, setMiddleWidth] = useState(middleW);
@@ -78,34 +78,46 @@ function Example() {
                 console.log('FIRST RESIZER');
                 let leftW = e.clientX - resizerW / 2;
                 if (leftW < 50) {
-                    // e.target.style.cursor = 'e-resize';
-                    console.log('LESS than 50');
+                    // console.log('LESS than 50');
                     leftW = 0;
-                    setFirstPanelHidden(true);
+                    // setFirstPanelHidden(true);
                 } else if (leftW < 100) {
-                    //e.target.style.cursor = 'col-resize';
-                    console.log('between 50 and 100');
+                    // console.log('between 50 and 100');
                     leftW = 100;
-                    setFirstPanelHidden(false);
-                } else if (leftW >= 400) {
-                    //e.target.style.cursor = 'w-resize';
-                    console.log('between 50 and 100');
-                    leftW = 400;
-                    setFirstPanelHidden(false);
+                    // setFirstPanelHidden(false);
+                } else if (leftW >= 300) {
+                    leftW = 300;
+                    // setFirstPanelHidden(false);
                 }
                 else if (firstPanelHidden) {
-                    //e.target.style.cursor = 'col-resize';
                     setFirstPanelHidden(false);
                 }
-                const middleW = w - leftW - rightW - resizerW - resizerW;
+                const middleW = w - leftW - rightWidth - resizerW - resizerW;
                 setLeftWidth(leftW)
                 setMiddleWidth(middleW);
+                
             } else if (currentResizer === 'second') {
                 console.log('SECOND RESIZER');
-                const middleW = e.clientX - leftWidth - resizerW;
-                const rightW = w - leftWidth - resizerW - middleW - resizerW;
-                setMiddleWidth(middleW);
+                // console.log(`e.clientX ${e.clientX}`);
+                let middleW = e.clientX - leftWidth - resizerW;
+                console.log(`middleWidth ${middleWidth}`);
+                let rightW = w - leftWidth - resizerW - middleW - resizerW;
+                // console.log(`rightW ${rightW}`);
+                console.log(`rightWidth ${rightWidth}`);
+                if (rightW < 50) {
+                    rightW = 0;
+                    middleW = w - leftWidth - resizerW - resizerW - rightW;
+                    
+                } else if (rightW < 100) {
+                    rightW = 0;
+                    middleW = w - leftWidth - resizerW - resizerW - rightW;
+                } else if (middleW < 50){
+                    middleW =0;
+                }
                 setRightWidth(rightW);
+                setMiddleWidth(middleW);
+
+
             }
         }
     }
@@ -115,18 +127,13 @@ function Example() {
     const allParts = [];
     let Left = styled.div`
   width: ${leftWidth}px;
-  display:${firstPanelHidden === true ? 'none' : ''}
+  // display:${firstPanelHidden === true ? 'none' : ''}
+  display:${leftWidth === 0 ? 'none' : ''}
+
   `;
     const leftSection = <Left key="left">{alphabet}</Left>
-
-    // if (leftWidth <100){
-    //   // allParts.push('')
-
-    // }else{
-    //   allParts.push(leftSection);
-    // }
-
     allParts.push(leftSection);
+
     let resizer1 = <Resizer
         key='resizer1'
         id="first"
@@ -136,6 +143,8 @@ function Example() {
 
     let Middle = styled.div`
    width: ${middleWidth}px;
+   display:${middleWidth === 0 ? 'none' : ''}
+
   `;
     const middleSection = <Middle key="middle">{alphabet}</Middle>
     allParts.push(middleSection);
@@ -150,6 +159,8 @@ function Example() {
 
     let Right = styled.div`
     width: ${rightWidth}px;
+    display:${rightWidth === 0 ? 'none' : ''}
+
     `;
     const rightSection = <Right key="right">{alphabet}</Right>
     allParts.push(rightSection);
