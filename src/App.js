@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
+import ToolLayoutTest from './Components/ToolLayoutTest'
+
+// import ToolTest from './Components/ToolTest';
+import ToolTest25 from './Components/ToolTest25';
+
+
 
 
 class App extends Component {
@@ -8,13 +14,12 @@ class App extends Component {
     super(props);
     
   }
-
       
-
   render() {
     return (
       <>
-      <p>test</p>
+    <ToolLayoutTest/>
+    {/* <ToolTest25/> */}
       </>
     );
   }  
