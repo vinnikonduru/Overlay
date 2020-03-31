@@ -1,2 +1,2 @@
-# DynamicComponentsAndRenderers
-Toy example to experiment with DoenetViewer as the manager of renders
+# ToolLayout Demo
+Toy example to experiment with Doenet Tool Layout..
