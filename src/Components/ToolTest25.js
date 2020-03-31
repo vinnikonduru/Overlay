@@ -102,6 +102,8 @@ function Example() {
         setMiddleWidth(middleW);
         setRightWidth(rightW);
       }
+     
+
 
     }
   }

@@ -1,192 +1,175 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef } from 'react'
+import styled from 'styled-components'
 
-const LayoutContainer = styled.div`
-    display: flex;
-    min-height: 100vh; 
-    padding:0px;
-    margin:0px;
-`;
-
-const Panel = styled.div`
-    background: #e4eaed;
-    width: ${props => props.width};
+const alphabet = "a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z ";
+const Container = styled.div` 
+ display:flex;
+ height: 100vh;
+ margin:0px;
+ padding:0px;
+//  overflow-y: hidden
 `;
 
 const Resizer = styled.div`
-    border:3px solid gray;
-    background-color: gray;
+    // border: 4px solid #c6ccc8;
+    width:10px;
+    background-color:#c6ccc8;
+    opacity: 0.2;
     position: relative;
     cursor: col-resize;
     flex-shrink: 0;
-    -webkit-user-select: none;  
-    -moz-user-select: none;     
-    -ms-user-select: none;      
-    user-select: none;
-
-   
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;    
 `;
 
-export default class ToolPanelsTest extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-        isDragging: false,
-        panels: [200, 600, 400],
-        deviceGivenWidth: this.widthToDevice(),
+function Example() {
+    //var w = window.innerWidth;
+    const [width, setWidth] = useState(window.innerWidth);
+    const leftW = 200;
+    const rightW = 400;
+    const resizerW = 6;
+    const middleW = width - leftW - rightW - resizerW - resizerW;
+    // const middleW = auto;
+    const [leftWidth, setLeftWidth] = useState(leftW);
+    const [rightWidth, setRightWidth] = useState(rightW);
+    const [isResizing, setIsResizing] = useState(false);
+    const [currentResizer, setCurrentResizer] = useState('');
+    const [firstPanelHidden, setFirstPanelHidden] = useState(false);
+    const [middleWidth, setMiddleWidth] = useState(middleW);
+
+
+    const containerRef = useRef();
+    // const firstResizerRef = useRef();
+    // const secondResizerRef = useRef();
+
+    useEffect(() => {
+        // firstResizerRef.current.addEventListener('mousedown', startResize);
+        //secondResizerRef.current.addEventListener('mousedown', startResize);
+        window.addEventListener('resize', handleResize);
+        containerRef.current.addEventListener('mousedown', startResize);
+        containerRef.current.addEventListener('mousemove', resizeFirst);
+        containerRef.current.addEventListener('mouseup', stopResize);
+        return () => {
+            // firstResizerRef.current.removeEventListener('mousedown', startResize);
+            //  secondResizerRef.current.removeEventListener('mousedown', startResize);
+            containerRef.current.removeEventListener('mousedown', startResize);
+            containerRef.current.removeEventListener('mousemove', resizeFirst);
+            containerRef.current.removeEventListener('mouseup', stopResize);
+            window.removeEventListener('resize', handleResize)
+        }
+    })
+
+    const handleResize = () => {
+        setWidth(window.innerWidth)
     }
-    this.stopResize = this.stopResize.bind(this);
-    this.startResize = this.startResize.bind(this);
-    this.resizePanel = this.resizePanel.bind(this);
-    this.windowResizeHandler = this.windowResizeHandler.bind(this);
-}
 
-windowResizeHandler() {
-    let deviceGivenWidth = this.widthToDevice();
-    if (this.state.deviceGivenWidth !== deviceGivenWidth) {
-        this.setState({ deviceGivenWidth: deviceGivenWidth });
+    const startResize = (event) => {
+        console.log('mouseDown called', event.target.id);
+        setCurrentResizer(event.target.id);
+        setIsResizing(true);
     }
-    if (this.state.deviceGivenWidth === 'tablet') {
-        this.setState({ panels: [150, 600, 300] });
+
+    const stopResize = (event) => {
+        console.log('stopResize mouseUp called');
+        setIsResizing(false);
+        setCurrentResizer('');
     }
-    if (this.state.deviceGivenWidth === 'computer') {
-        this.setState({ panels: [200, 600, 400] });
+
+
+    const resizeFirst = (e) => {
+        // console.log('mouseMove called', isResizing);
+        if (isResizing) {
+            // console.log(`e.clientX ${e.clientX}`);
+            //const w = window.innerWidth;
+            const w = width;
+
+            if (currentResizer === 'first') {
+                console.log('FIRST RESIZER');
+                let leftW = e.clientX - resizerW / 2;
+                if (leftW < 50) {
+                    // e.target.style.cursor = 'e-resize';
+                    console.log('LESS than 50');
+                    leftW = 0;
+                    setFirstPanelHidden(true);
+                } else if (leftW < 100) {
+                    //e.target.style.cursor = 'col-resize';
+                    console.log('between 50 and 100');
+                    leftW = 100;
+                    setFirstPanelHidden(false);
+                } else if (leftW >= 600) {
+                    //e.target.style.cursor = 'w-resize';
+                    leftW = 600;
+                    setFirstPanelHidden(false);
+                }
+                else if (firstPanelHidden) {
+                    //e.target.style.cursor = 'col-resize';
+                    setFirstPanelHidden(false);
+                }
+                const middleW = w - leftW - rightW - resizerW - resizerW;
+                setLeftWidth(leftW)
+                setMiddleWidth(middleW);
+            } else if (currentResizer === 'second') {
+                console.log('SECOND RESIZER');
+                const middleW = e.clientX - leftWidth - resizerW;
+                const rightW = w - leftWidth - resizerW - middleW - resizerW;
+                setMiddleWidth(middleW);
+                setRightWidth(rightW);
+            }
+        }
     }
+
+
+
+    const allParts = [];
+    let Left = styled.div`
+  width: ${leftWidth}px;
+  display:${firstPanelHidden === true ? 'none' : ''}
+  `;
+    const leftSection = <Left key="left">{alphabet}</Left>
+    allParts.push(leftSection);
+    let resizer1 = <Resizer
+        key='resizer1'
+        id="first"
+    //  ref={firstResizerRef}
+    ></Resizer>
+    allParts.push(resizer1);
+    let Middle = styled.div`
+    width: ${middleWidth}px;
+  `;
+    const middleSection = <Middle key="middle">{alphabet}</Middle>
+    allParts.push(middleSection);
+
+    let resizer2 = <Resizer key='resizer2'
+        id="second"
+    // ref={secondResizerRef}
+    >
+
+    </Resizer>
+    allParts.push(resizer2);
+
+    let Right = styled.div`
+    width: ${rightWidth}px;
+    `;
+    const rightSection = <Right key="right">{alphabet}</Right>
+    allParts.push(rightSection);
+
+    // const WindowContainer = styled(Container);
+
+    return <Container
+    // onMouseOut={stopResize}
+    ref={containerRef}
+>
+    {allParts}</Container>
 }
 
-widthToDevice() {
-    let w = document.documentElement.clientWidth;
-    if (w >= 1024) { return "computer"; }
-    if (w < 1024 && w >= 768) { return "tablet"; }
-    return "phone";
-}
-
-componentDidMount() {
-    ReactDOM.findDOMNode(this).addEventListener('mousemove', this.resizePanel)
-    ReactDOM.findDOMNode(this).addEventListener('mouseup', this.stopResize)
-    ReactDOM.findDOMNode(this).addEventListener('mouseleave', this.stopResize)
-    window.addEventListener("resize", this.windowResizeHandler);
-    if (this.state.deviceGivenWidth === 'computer') {
-        this.setState({ panels: [200, 600, 400] });
-    }
-    if (this.state.deviceGivenWidth === 'tablet') {
-        this.setState({ panels: [150, 600, 300] });
-    }
-}
-
-// startResize(event, index) {
-//     this.setState({
-//         isDragging: true,
-//         currentPanel: index,
-//         initialPos: event.clientX
-//     })
-// }
-
-// stopResize() {
-//     if (this.state.isDragging) {
-//         this.setState(({ panels, currentPanel, delta }) => ({
-//             isDragging: false,
-//             delta: 0,
-//             currentPanel: null
-//         }))
-//     }
-// }
-
-// resizePanel(event) {
-//     if (this.state.isDragging) {
-//         const newDelta = event.clientX - this.state.initialPos;
-//         const newPanleValues = {
-//             ...this.state.panels,
-//             [this.state.currentPanel]: this.state.panels[this.state.currentPanel] - newDelta,
-//             [this.state.currentPanel - 1]: this.state.panels[this.state.currentPanel - 1] + newDelta,
-//         }
-//         const clientX = event.clientX;
-//         console.log('newPanleValues', newPanleValues);
-//         console.log('clientX', event.clientX);
-//         if (newPanleValues[0] <= 70 && clientX <= 119) {
-//             return false;
-//         }
-
-//         // currentPanel === 1
-
-
-//         // if (newPanleValues[0] <= 70 || newPanleValues[0] >= 100) {
-//         //     newPanleValues[0] = this.state.panels[0];
-//         // }
-
-//         this.setState(({ panels, currentPanel }) => ({
-//             // panels: {
-//             //     ...panels,
-//             //     [currentPanel]: (panels[currentPanel] || 0) - newDelta,
-//             //     [currentPanel - 1]: (panels[currentPanel - 1] || 0) + newDelta
-//             // },
-//             delta: newDelta,
-//             panels: newPanleValues
-
-//         }));
-
-//         //            event.target.style.top = event.clientY + "px";
-
-//     }
-
-// }
-
-
-startResize(event, index) {
-  this.setState({
-      isDragging: true,
-      currentPanel: index,
-      initialPos: event.clientX
-  })
-}
-
-stopResize() {
-  if (this.state.isDragging) {
-      this.setState(({ panels, currentPanel, delta }) => ({
-          isDragging: false,
-          delta: 0,
-          currentPanel: null
-      }))
-  }
-}
-
-resizePanel(event) {
-  if (this.state.isDragging) {
-      const newDelta = event.clientX - this.state.initialPos;
-      this.setState(({ panels, currentPanel }) => ({
-          panels: {
-              ...panels,
-              [currentPanel]: (panels[currentPanel] || 0) - newDelta,
-              [currentPanel - 1]: (panels[currentPanel - 1] || 0) + newDelta
-          },
-          delta: newDelta
-
-      }))
-  }
-}
-
-render() {
-    const rest = this.props.children.slice(1);
+function ToolPanelsTest() {
     return (
-        <LayoutContainer onMouseUp={() => this.stopResize()}>
-            <Panel width={this.state.panels[0] + 'px'}>
-                {this.props.children[0]}
-            </Panel>
-            {[].concat(...rest.map((child, i) => {
-                return [
-                    <Resizer onMouseDown={(e) => this.startResize(e, i + 1)}
-                        key={"resizer_" + i}
-                        style={this.state.currentPanel === i + 1 ? { left: this.state.delta } : {}}
-                    ></Resizer>,
-                    <Panel
-                        key={"panel_" + i}
-                        width={i === 0 ? `calc(100% - ${this.state.panels[0]}px - ${this.state.panels[2]}px)` : this.state.panels[i + 1] + 'px'}>
-                        {child}
-                    </Panel>
-                ]
-            }))}
-        </LayoutContainer>
-    )
+        <div>
+            <Example />
+        </div>
+    );
 }
-}
+
+export default ToolPanelsTest;

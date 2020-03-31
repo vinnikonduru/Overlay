@@ -43,15 +43,19 @@ class ToolLayout extends Component {
   render() {
 
     if (this.state.deviceGivenWidth === 'computer') {
-      return <ComputerPanels>
+      return (
+        
+        <ComputerPanels>
+       
 
-        <LeftNavPanel />
+         <LeftNavPanel />
 
         <ContentPanel />
 
-        <NotesPanel />
+        <NotesPanel /> 
 
       </ComputerPanels>
+      )
 
     } else if (this.state.deviceGivenWidth === 'tablet') {
       return 'tablet'

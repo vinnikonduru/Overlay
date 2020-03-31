@@ -1,29 +1,60 @@
 import React, { Component } from 'react';
-import './App.css';
-import ToolLayoutTest from './Components/ToolLayoutTest'
-
-// import ToolTest from './Components/ToolTest';
-// import ToolTest25 from './Components/ToolTest25';
-// import ToolPanelsTest from './Components/ToolPanelsTest';
-
-
-
+// import ToolLayoutTest from './Components/ToolLayoutTest';
+import ToolLayoutTest1 from './Components/ToolLayoutTest1';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
-    
   }
-      
   render() {
     return (
       <>
-    <ToolLayoutTest/>
-    {/* <ToolPanelsTest/> */}
+        {/* <ToolLayoutTest /> */}
+        <ToolLayoutTest1 />
       </>
     );
-  }  
+  }
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { Component } from 'react';
+// // import ToolLayoutTest from './Components/ToolLayoutTest';
+// // import ToolLayoutTest1 from './Components/ToolLayoutTest1';
+// // import ToolTest from './Components/ToolTest';
+// import ToolLayout from './Components/ToolLayout';
+
+// class App extends Component {
+
+//   constructor(props) {
+//     super(props);
+
+//   }
+
+//   render() {
+//     return (
+//       <>
+//         {/* <ToolLayoutTest/> */}
+//         {/* <ToolTest /> */}
+//         {/* <ToolLayoutTest1 /> */}
+//         <ToolLayout />
+
+//       </>
+//     );
+//   }
+// }
+
+// export default App;

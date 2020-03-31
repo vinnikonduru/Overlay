@@ -1,0 +1,13 @@
+.item{
+position:relative;
+width:200px;
+height:100vh;
+background-color: cadetblue;
+}
+.buttontooltip{
+  position:absolute;
+  top:20vh;
+
+  left:125px;
+  transform: rotate(270deg);
+}

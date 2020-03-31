@@ -7,6 +7,7 @@ const Container = styled.div`
  display:flex;
  height: 100vh;
 
+
 `;
 
 const Resizer = styled.div`
@@ -22,7 +23,7 @@ const Resizer = styled.div`
     user-select: none;    
 `;
 
-export default function Example(props) {
+function Example() {
     const [width, setWidth] = useState(window.innerWidth);
     //const [width, height] = useWindowSize();
     const leftW = 200;
@@ -44,7 +45,7 @@ export default function Example(props) {
     const leftButtonRef = useRef();
 
     useEffect(() => {
-        // window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);
         leftButtonRef.current.addEventListener('click', leftButtonClickHandler)
         containerRef.current.addEventListener('mousedown', startResize);
         containerRef.current.addEventListener('mousemove', resizeFirst);
@@ -57,19 +58,19 @@ export default function Example(props) {
             containerRef.current.removeEventListener('mousedown', startResize);
             containerRef.current.removeEventListener('mousemove', resizeFirst);
             window.removeEventListener('mouseup', stopResize);
-            // window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
             containerRef.current.removeEventListener('mouseover', mouseOverHandler);
             containerRef.current.removeEventListener('mouseout', mouseOutHandler);
         }
     })
 
-    // const handleResize = () => {
-    //     setWidth(window.innerWidth);
-    //     setRightWidth(rightWidth);
-    //     setLeftWidth(leftWidth);
-    //     const middleW = width - leftWidth - rightWidth - 6 - 6;
-    //     setMiddleWidth(middleW);
-    // }
+    const handleResize = () => {
+        setWidth(window.innerWidth);
+        setRightWidth(rightWidth);
+        setLeftWidth(leftWidth);
+        const middleW = width - leftWidth - rightWidth - 6 - 6;
+        setMiddleWidth(middleW);
+    }
 
     const startResize = (event) => {
         //event.stopPropagation();
@@ -97,20 +98,24 @@ export default function Example(props) {
             // console.log(`e.clientX ${e.clientX}`);
             const w = width;
 
-            if (currentResizer === 'first' && leftWidth > 0) {
+            if (currentResizer === 'first' ) {
                 console.log('FIRST RESIZER');
                 let leftW = e.clientX - resizerW / 2;
                 let rightW = rightWidth;
                 if (leftW < 50) {
                     // console.log('LESS than 50');
                     leftW = 0;
+                    e.target.style.cursor = "e-resize";
                     // setFirstPanelHidden(true);
                 } else if (leftW < 100) {
                     // console.log('between 50 and 100');
                     leftW = 100;
+                    e.target.style.cursor = "col-resize";
                     // setFirstPanelHidden(false);
                 } else if (leftW >= 300) {
                     leftW = 300;
+                    e.target.style.cursor = "w-resize";
+
                     // setFirstPanelHidden(false);
                 }
                 else if (firstPanelHidden) {
@@ -126,7 +131,7 @@ export default function Example(props) {
                 setMiddleWidth(middleW);
                 setRightWidth(rightW);
 
-            } else if (currentResizer === 'second' && rightWidth > 0) {
+            } else if (currentResizer === 'second' ) {
                 console.log('SECOND RESIZER');
                 // console.log(`e.clientX ${e.clientX}`);
                 let middleW = e.clientX - leftWidth - resizerW;
@@ -134,12 +139,18 @@ export default function Example(props) {
                 if (rightW < 50) {
                     rightW = 0;
                     middleW = w - leftWidth - resizerW - resizerW - rightW;
+                    e.target.style.cursor = "w-resize";
 
                 } else if (rightW < 100) {
                     rightW = 0;
                     middleW = w - leftWidth - resizerW - resizerW - rightW;
+                    e.target.style.cursor = "col-resize";
+
                 } else if (middleW < 50) {
                     middleW = 0;
+                }else{
+                    e.target.style.cursor = "col-resize";
+  
                 }
                 setRightWidth(rightW);
                 setMiddleWidth(middleW);
@@ -151,14 +162,14 @@ export default function Example(props) {
         // console.log(e.target.id)
         if (e.target.id === "leftpanel") {
             if (middleWidth === 0) {
-                event.target.nextSibling.style.display = "inline-block"
+                // event.target.nextSibling.style.display = "inline-block"
             }
             setLeftButtonVisible(true);
         }
 
         if (e.target.id === "rightpanel") {
             if (middleWidth === 0) {
-                event.target.previousSibling.style.display = "inline-block"
+                // event.target.previousSibling.style.display = "inline-block"
             }
             setRightButtonVisible(true);
         }
@@ -168,13 +179,13 @@ export default function Example(props) {
         // console.log(e.target.id)
         if (e.target.id === "leftpanel") {
             if (middleWidth === 0) {
-                event.target.nextSibling.style.display = "none";
+                // event.target.nextSibling.style.display = "none";
                 setLeftButtonVisible(false);
             }
         }
         if (e.target.id === "rightpanel") {
             if (middleWidth === 0) {
-                event.target.previousSibling.style.display = "none"
+                // event.target.previousSibling.style.display = "none"
 
                 setRightButtonVisible(false);
             }
@@ -230,8 +241,8 @@ export default function Example(props) {
         key="left"
         id="leftpanel"
     // onMouseOver={(e)=>buttonStyleHandler(e)}
-    // onMouseOut={(e)=>{leftButtonMouseOutHandler(e)}}
->{props.children[0]}</Left>
+    onMouseOut={(e)=>{leftButtonMouseOutHandler(e)}}
+    >{alphabet}</Left>
     allParts.push(leftSection);
 
 
@@ -290,7 +301,7 @@ export default function Example(props) {
     const middleSection = <Middle key="middle"
         id="middlepanel"
         onMouseOver={middleSectionMouseOverHandler}
-    >{props.children[1]}
+    ><p>a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z a b c d e f g h i j k l m n o p q r s t u v w x y z </p>
     </Middle>
     allParts.push(middleSection);
 
@@ -348,61 +359,17 @@ export default function Example(props) {
     // onMouseOver={(e)=>buttonRightStyleHandler(e)}
     // onMouseOut={(e)=>{rightButtonMouseOutHandler(e)}}
     // // onMouseOver={rightResizerMouseOverHandler}
-    >{props.children[2]}</Right>
+    >{alphabet}</Right>
     allParts.push(rightSection);
 
     return <Container ref={containerRef}>{allParts}</Container>
 }
+function ToolLayoutTest1() {
+    return (
+        <div>
+            <Example />
+        </div>
+    );
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // const stopResizeFirst = (event) => {
-    //     setIsResizing(false);
-    //     setInitialPosition(0);
-    //     setCurrentResizer('');
-    //     setFirstNewDelta(0)
-    //     //event.target.style.position = 'relative';
-    // }
-
-
-
-    // const stopResizeSecond = (event) => {
-    //     setIsResizing(false);
-    //     setInitialPosition(0);
-    //     setCurrentResizer('');
-    //     //setSecondNewDelta(0);
-    // }
-     // set secondpanel - delta
-            // set firstpanel + delta
-            // const thirdWidth = event.pageX - thirdDiv.current.getBoundingClientRect().left + 'px';
-            // const secondWidth = event.pageX + secondDiv.current.getBoundingClientRect().left + 'px'
-
-
-
-               //e.target.style.left = e.pageX - e.target.offsetWidth / 2 + 'px';
-        //e.target.style.top = e.pageY - e.target.offsetHeight / 2 + 'px';
+export default ToolLayoutTest1;
