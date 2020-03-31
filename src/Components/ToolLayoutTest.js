@@ -11,7 +11,7 @@ const Container = styled.div`
  
 `;
 
-function Example() {
+function ToolLayoutTest() {
 
     const [{ x, color }, set] = useSpring(() => ({ x: 100, color: "#fff" }));
     var w = window.innerWidth;
@@ -315,15 +315,8 @@ function Example() {
 
     return <Container ref={containerRef}>{allParts}</Container>
 }
-function ToolLayoutTest1() {
-    return (
-        <div>
-            <Example />
-        </div>
-    );
-}
 
-export default ToolLayoutTest1;
+export default ToolLayoutTest;
 
 
 
