@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ToolLayout from './Components/ToolLayout';
 
 class App extends Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class App extends Component {
   render() {
     return (
       <>
+      <ToolLayout />
       </>
     );
   }
