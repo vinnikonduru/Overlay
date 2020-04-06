@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import ToolLayoutTest from './Components/ToolLayoutTest';
-import ToolLayoutTest1 from './Components/ToolLayoutTest1';
+import ToolLayout from './Components/ToolLayout';
 
 class App extends Component {
   constructor(props) {
@@ -9,14 +8,44 @@ class App extends Component {
   render() {
     return (
       <>
-        {/* <ToolLayoutTest /> */}
-        <ToolLayoutTest1 />
+      <ToolLayout />
       </>
     );
   }
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
